@@ -32,11 +32,14 @@ npm run dev
 
 ## ⚠️ Falta confirmar com o cliente
 
-- [x] ~~Renault Clio 0.9 TCe — 09/2014, 143.000 km, Gasolina, 9.450€, Nacional~~
-- [ ] **Potência e caixa do Clio** — não vinham no cartaz. Estão a `null`,
-      por isso o site não os mostra (em vez de inventar). Confirmar e preencher.
-- [ ] **Mais 2–3 viaturas** — os carros 2 e 3 em `src/dados.js` são exemplos
-- [ ] **Fotos das restantes** — horizontal, mínimo 1600px de largura
+- [x] ~~5 viaturas com dados completos (specs, extras, inspeção)~~
+- [ ] **Quilómetros do Peugeot 206** — o cartaz diz 175.000, a descrição do
+      anúncio diz 176.000. Está a 176.000. Confirmar qual é o correto.
+- [ ] **Garantia do Peugeot 206** — é o único anúncio que não menciona os
+      18 meses. Está `null`, por isso o site não mostra garantia neste carro.
+      Se tiver, é só preencher.
+- [ ] **Mais fotos por viatura** — cada carro tem 1 foto (a do cartaz).
+      O campo `imgs` é uma lista: basta juntar mais e a galeria aparece sozinha.
 - [ ] **TAEG do financiamento** — está a 6.9% em `src/dados.js`.
       Perguntar qual usar, ou tirar a percentagem e deixar só "valor indicativo"
 - [ ] **Horário** — sendo por marcação, confirmar se há dias/horas de referência
@@ -132,3 +135,43 @@ Em `public/brand/`:
 Todos gerados a partir do logo original com o fundo branco removido.
 O `logo-escuro` tem os traços do carro invertidos para branco — o dourado
 mantém-se igual.
+
+
+---
+
+## Páginas de viatura
+
+Cada carro tem endereço próprio:
+
+```
+/                                    → catálogo (scroll ecrã a ecrã)
+/viatura/renault-clio-09-tce         → página da viatura
+/viatura/dacia-logan-mcv-09-tce
+/viatura/toyota-yaris-13-vvti
+/viatura/chevrolet-aveo-sedan-12-ls
+/viatura/peugeot-206-11-look
+```
+
+Isto permite mandar o link de um carro específico por WhatsApp,
+em vez de mandar o site e dizer "é o terceiro a contar de cima".
+
+O endereço vem do campo `slug` em `src/dados.js`. Se mudares o slug de
+um carro que já foi partilhado, o link antigo deixa de funcionar — nesse
+caso mostra "Esta viatura já não está disponível" com botão para o stock.
+
+O `vercel.json` já tem a regra que faz estes endereços funcionarem
+quando alguém abre o link diretamente.
+
+### Galeria de fotos
+
+O campo `imgs` de cada carro é uma lista. Com uma foto mostra só a foto;
+com duas ou mais aparecem automaticamente as miniaturas e os pontinhos
+de navegação. Clicar na foto abre em ecrã inteiro.
+
+```js
+imgs: [
+  "/carros/clio-2014.jpg",
+  "/carros/clio-2014-interior.jpg",
+  "/carros/clio-2014-traseira.jpg",
+],
+```
