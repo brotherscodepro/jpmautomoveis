@@ -1,5 +1,5 @@
 import { useState, useRef, useEffect, useCallback } from "react";
-import { STAND, CARROS } from "../dados";
+import { STAND, CARROS_VISIVEIS as CARROS } from "../dados";
 import CarroEcra from "../components/CarroEcra";
 import Contacto from "../components/Contacto";
 
