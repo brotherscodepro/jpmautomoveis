@@ -9,6 +9,12 @@ export default function Contacto({ tema: t }) {
       display: "flex", flexDirection: "column", justifyContent: "center",
     }}>
       <div style={{ maxWidth: 660 }}>
+        <img
+          src="/brand/logo-escuro.png"
+          alt="JPM Automóveis"
+          style={{ height: 92, width: "auto", marginBottom: 26, opacity: .95 }}
+        />
+
         <div style={{
           fontSize: 10, letterSpacing: ".3em", textTransform: "uppercase",
           color: t.glow, fontWeight: 700, marginBottom: 20,
