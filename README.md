@@ -162,16 +162,44 @@ caso mostra "Esta viatura já não está disponível" com botão para o stock.
 O `vercel.json` já tem a regra que faz estes endereços funcionarem
 quando alguém abre o link diretamente.
 
-### Galeria de fotos
+### Fotos das viaturas
 
-O campo `imgs` de cada carro é uma lista. Com uma foto mostra só a foto;
-com duas ou mais aparecem automaticamente as miniaturas e os pontinhos
-de navegação. Clicar na foto abre em ecrã inteiro.
+Cada carro tem uma pasta em `src/fotos/`. **Só tens de largar lá os
+ficheiros** — não é preciso editar código nenhum.
 
-```js
-imgs: [
-  "/carros/clio-2014.jpg",
-  "/carros/clio-2014-interior.jpg",
-  "/carros/clio-2014-traseira.jpg",
-],
 ```
+src/fotos/
+├── clio/       → Renault Clio
+│   ├── 1.jpg   ← foto principal (catálogo + partilhas)
+│   ├── 2.jpg
+│   └── 3.jpg
+├── logan/      → Dacia Logan MCV
+├── yaris/      → Toyota Yaris
+├── aveo/       → Chevrolet Aveo
+└── 206/        → Peugeot 206
+```
+
+O site apanha as fotos sozinho e ordena-as pelo nome. A `1` é a principal.
+Com uma foto mostra só a foto; a partir da segunda aparecem as miniaturas
+e a navegação automaticamente.
+
+**Formatos:** `.jpg` `.jpeg` `.png` `.webp`
+
+**Nomes:** usa números (`1.jpg`, `2.jpg`) ou nomes descritivos
+(`frente.jpg`, `interior.jpg`). Evita acentos e espaços.
+A ordenação é natural, por isso `10.jpg` vem depois de `2.jpg`.
+
+**Pasta vazia:** se um carro ficar sem fotos, não aparece no catálogo
+(em vez de aparecer partido). Em desenvolvimento aparece um aviso na consola.
+
+### Juntar uma viatura nova
+
+1. Criar a pasta: `src/fotos/nome-do-carro/`
+2. Largar lá as fotos
+3. Em `src/dados.js`, copiar um bloco de carro existente e mudar os dados,
+   incluindo `slug` (o endereço) e `pasta` (o nome da pasta criada)
+
+### Tirar uma viatura (vendida)
+
+Apagar o bloco do carro em `src/dados.js` — ou, mais rápido, esvaziar a
+pasta das fotos, que faz o carro desaparecer do catálogo.
