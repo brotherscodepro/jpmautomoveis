@@ -4,9 +4,9 @@
 
 /* ── Cores da marca ──
    Tiradas do logo oficial. O dourado do logo (#B87818) é mais
-   escuro do que o dos cartazes do Instagram; para ecrã usamos
-   uma versão ligeiramente mais clara, que lê melhor sobre fundo
-   escuro sem deixar de ser a mesma cor. */
+   escuro do que o dos cartazes; para ecrã usamos uma versão
+   ligeiramente mais clara, que lê melhor sobre fundo escuro
+   sem deixar de ser a mesma cor. */
 export const OURO = "#B87818";        // dourado do logo
 export const OURO_ECRA = "#D89A2A";   // versão para fundo escuro
 
@@ -31,23 +31,20 @@ export const STAND = {
   ],
 
   credito: {
-    taeg: 0.069,        // ⚠️ CONFIRMAR com o cliente
+    taeg: 0.069,        // confere com os cartazes: 3.450€ a 60 meses ≈ 70€/mês
     prazoMax: 120,
-    prazoInicial: 120,
-    entradaInicial: 10,
+    prazoInicial: 60,   // 60 meses = o prazo que usam na publicidade
+    entradaInicial: 0,
   },
 };
 
 /* ══════════════════════════════════════════════════════════
    VIATURAS EM DESTAQUE
+   Dados retirados dos cartazes do Instagram.
 
-   O `glow` é sempre o laranja da marca JPM — mantém a
-   identidade consistente com os cartazes do Instagram.
-   Só o `base` muda ligeiramente conforme o carro.
-
-   Campos opcionais (cv, caixa, versao, mes): se não souberes,
-   deixa `null` — o site não os mostra, em vez de mostrar
-   informação inventada.
+   `destaque`  → a frase que eles põem na barra preta do cartaz
+   `garantia`  → só preenchido quando o cartaz o indica
+   `cv`/`caixa`→ null quando o cartaz não diz (o site não os mostra)
    ══════════════════════════════════════════════════════════ */
 
 export const CARROS = [
@@ -56,53 +53,75 @@ export const CARROS = [
     marca: "Renault",
     modelo: "Clio",
     versao: "0.9 TCe",
-    ano: 2014,
-    mes: "09",
+    ano: 2014, mes: "09",
     km: 143000,
     combustivel: "Gasolina",
-    cv: null,            // ⚠️ confirmar
-    caixa: null,         // ⚠️ confirmar
+    cv: null, caixa: null,
     preco: 9450,
-    nacional: true,
+    destaque: "Nacional",
     garantia: "18 meses",
     img: "/carros/clio-2014.jpg",
     tema: { base: "#15171A", glow: OURO_ECRA, texto: "#F0F1F3" },
   },
-
-  /* ⚠️ EXEMPLOS — substituir por viaturas reais do stock */
   {
     id: 2,
-    marca: "Mercedes-Benz",
-    modelo: "Classe A",
-    versao: "180 d AMG Line Aut.",
-    ano: 2019,
-    mes: null,
-    km: 118000,
-    combustivel: "Diesel",
-    cv: 116,
-    caixa: "Automática",
-    preco: 23900,
-    nacional: true,
+    marca: "Dacia",
+    modelo: "Logan MCV",
+    versao: "0.9 TCe",
+    ano: 2016, mes: "11",
+    km: 215000,
+    combustivel: "Gasolina / GPL",
+    cv: null, caixa: null,
+    preco: 5950,
+    destaque: "Bi-Fuel",
     garantia: "18 meses",
-    img: "https://images.unsplash.com/photo-1618843479313-40f8afb4b4d8?w=1800&q=90",
-    tema: { base: "#121418", glow: OURO_ECRA, texto: "#EDEFF3" },
+    img: "/carros/dacia-logan-2016.jpg",
+    tema: { base: "#0E1420", glow: OURO_ECRA, texto: "#E9EDF4" },
   },
   {
     id: 3,
-    marca: "Volkswagen",
-    modelo: "Golf",
-    versao: "1.6 TDI",
-    ano: 2017,
-    mes: null,
-    km: 156000,
-    combustivel: "Diesel",
-    cv: 115,
-    caixa: "Manual",
-    preco: 14750,
-    nacional: true,
+    marca: "Toyota",
+    modelo: "Yaris",
+    versao: "1.3 VVT-i",
+    ano: 2006, mes: "08",
+    km: 240000,
+    combustivel: "Gasolina",
+    cv: null, caixa: null,
+    preco: 4950,
+    destaque: "IUC 39€",
     garantia: "18 meses",
-    img: "https://images.unsplash.com/photo-1503376780353-7e6692767b70?w=1800&q=90",
-    tema: { base: "#16130F", glow: OURO_ECRA, texto: "#F5F1EB" },
+    img: "/carros/toyota-yaris-2006.jpg",
+    tema: { base: "#101012", glow: OURO_ECRA, texto: "#EFEFF1" },
+  },
+  {
+    id: 4,
+    marca: "Chevrolet",
+    modelo: "Aveo Sedan",
+    versao: "1.2 LS",
+    ano: 2011, mes: "01",
+    km: 140000,
+    combustivel: "Gasolina",
+    cv: null, caixa: null,
+    preco: 4750,
+    destaque: "Único dono",
+    garantia: "18 meses",
+    img: "/carros/chevrolet-aveo-2011.jpg",
+    tema: { base: "#16181B", glow: OURO_ECRA, texto: "#F1F2F4" },
+  },
+  {
+    id: 5,
+    marca: "Peugeot",
+    modelo: "206",
+    versao: "1.1 Look",
+    ano: 2005, mes: "07",
+    km: 175000,
+    combustivel: "Gasolina",
+    cv: null, caixa: null,
+    preco: 3450,
+    destaque: "Desde 70€/mês",
+    garantia: null,          // o cartaz deste não indica garantia
+    img: "/carros/peugeot-206-2005.jpg",
+    tema: { base: "#141618", glow: OURO_ECRA, texto: "#F0F1F2" },
   },
 ];
 
