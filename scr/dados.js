@@ -2,9 +2,13 @@
    JPM AUTOMÓVEIS
    ══════════════════════════════════════════════════════════ */
 
-/* Cor da marca — tirada dos cartazes do Instagram deles */
-export const LARANJA = "#C67B16";
-export const LARANJA_CLARO = "#E09520";
+/* ── Cores da marca ──
+   Tiradas do logo oficial. O dourado do logo (#B87818) é mais
+   escuro do que o dos cartazes do Instagram; para ecrã usamos
+   uma versão ligeiramente mais clara, que lê melhor sobre fundo
+   escuro sem deixar de ser a mesma cor. */
+export const OURO = "#B87818";        // dourado do logo
+export const OURO_ECRA = "#D89A2A";   // versão para fundo escuro
 
 export const STAND = {
   nome: "JPM",
@@ -62,7 +66,7 @@ export const CARROS = [
     nacional: true,
     garantia: "18 meses",
     img: "/carros/clio-2014.jpg",
-    tema: { base: "#15171A", glow: LARANJA_CLARO, texto: "#F0F1F3" },
+    tema: { base: "#15171A", glow: OURO_ECRA, texto: "#F0F1F3" },
   },
 
   /* ⚠️ EXEMPLOS — substituir por viaturas reais do stock */
@@ -81,7 +85,7 @@ export const CARROS = [
     nacional: true,
     garantia: "18 meses",
     img: "https://images.unsplash.com/photo-1618843479313-40f8afb4b4d8?w=1800&q=90",
-    tema: { base: "#121418", glow: LARANJA_CLARO, texto: "#EDEFF3" },
+    tema: { base: "#121418", glow: OURO_ECRA, texto: "#EDEFF3" },
   },
   {
     id: 3,
@@ -98,7 +102,7 @@ export const CARROS = [
     nacional: true,
     garantia: "18 meses",
     img: "https://images.unsplash.com/photo-1503376780353-7e6692767b70?w=1800&q=90",
-    tema: { base: "#16130F", glow: LARANJA_CLARO, texto: "#F5F1EB" },
+    tema: { base: "#16130F", glow: OURO_ECRA, texto: "#F5F1EB" },
   },
 ];
 

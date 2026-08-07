@@ -57,24 +57,26 @@ export default function App() {
       {/* header */}
       <header style={{
         position: "absolute", top: 0, left: 0, right: 0, zIndex: 40,
-        padding: "clamp(18px,3.5vw,30px) clamp(18px,4vw,40px)",
-        display: "flex", justifyContent: "space-between", alignItems: "flex-start",
-        mixBlendMode: "difference",
+        padding: "clamp(14px,3vw,24px) clamp(18px,4vw,40px)",
+        display: "flex", justifyContent: "space-between", alignItems: "center",
       }}>
-        <div>
+        <img
+          src="/brand/logo-escuro.png"
+          alt="JPM Automóveis"
+          style={{
+            height: "clamp(52px,7vw,74px)", width: "auto",
+            filter: "drop-shadow(0 2px 12px rgba(0,0,0,.5))",
+          }}
+        />
+        <div style={{ textAlign: "right", lineHeight: 1.6 }}>
+          <a href={`tel:+${STAND.whatsapp}`} style={{
+            display: "block", color: "#fff", fontWeight: 600, fontSize: 13,
+            textShadow: "0 1px 8px rgba(0,0,0,.6)",
+          }}>{STAND.telefone}</a>
           <div style={{
-            fontFamily: "'Archivo Black','Arial Black',sans-serif",
-            fontSize: "clamp(19px,2.8vw,24px)", color: "#fff",
-            letterSpacing: "-.03em", lineHeight: 1,
-          }}>{STAND.nome}</div>
-          <div style={{
-            fontSize: 9, letterSpacing: ".28em", textTransform: "uppercase",
-            color: "rgba(255,255,255,.55)", marginTop: 4,
-          }}>{STAND.sub} · {STAND.cidade}</div>
-        </div>
-        <div style={{ fontSize: 11, color: "rgba(255,255,255,.6)", textAlign: "right", lineHeight: 1.7 }}>
-          <div style={{ color: "#fff", fontWeight: 600 }}>{STAND.telefone}</div>
-          <div style={{ fontSize: 9.5, letterSpacing: ".1em", textTransform: "uppercase" }}>Por marcação</div>
+            fontSize: 9, letterSpacing: ".14em", textTransform: "uppercase",
+            color: "rgba(255,255,255,.6)", textShadow: "0 1px 8px rgba(0,0,0,.6)",
+          }}>Por marcação</div>
         </div>
       </header>
 
