@@ -4,8 +4,8 @@ import Ticker from "./Ticker";
 
 export default function CarroEcra({ car, activo, scrollP, onFicha }) {
   const t = car.tema;
-  const { prazoMax, entradaInicial } = STAND.credito;
-  const desde = Math.round(prestacao(car.preco, entradaInicial, prazoMax));
+  const { prazoInicial, entradaInicial } = STAND.credito;
+  const desde = Math.round(prestacao(car.preco, entradaInicial, prazoInicial));
 
   // só mostra os números que existem — nada é inventado
   const numeros = [
@@ -68,12 +68,12 @@ export default function CarroEcra({ car, activo, scrollP, onFicha }) {
             fontSize: 10, letterSpacing: ".3em", textTransform: "uppercase",
             color: t.glow, fontWeight: 700,
           }}>{car.marca}</span>
-          {car.nacional && (
+          {car.destaque && (
             <span style={{
               fontSize: 9, letterSpacing: ".16em", textTransform: "uppercase",
               color: t.base, background: t.glow, fontWeight: 800,
               padding: "3px 9px", borderRadius: 3,
-            }}>Nacional</span>
+            }}>{car.destaque}</span>
           )}
         </div>
 
@@ -133,7 +133,7 @@ export default function CarroEcra({ car, activo, scrollP, onFicha }) {
               lineHeight: .95, letterSpacing: "-.04em",
             }}>{fmt(car.preco)}€</div>
             <div style={{ fontSize: 11.5, color: `${t.texto}55`, marginTop: 5 }}>
-              ou desde {desde}€/mês em {prazoMax} meses
+              ou desde {desde}€/mês em {prazoInicial} meses
             </div>
           </div>
 

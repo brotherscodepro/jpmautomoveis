@@ -68,8 +68,8 @@ export default function Ficha({ car, onClose }) {
         {/* serviços incluídos */}
         <div style={{ display: "flex", flexWrap: "wrap", gap: 7, marginBottom: 26 }}>
           {[
-            car.nacional ? "Nacional" : null,
-            car.garantia ? `${car.garantia} de garantia` : "Garantia incluída",
+            car.destaque || null,
+            car.garantia ? `${car.garantia} de garantia` : null,
             "Aceitamos retoma",
             "Entrega em todo o país",
           ].filter(Boolean).map((p) => (
