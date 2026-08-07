@@ -2,13 +2,9 @@
    JPM AUTOMÓVEIS
    ══════════════════════════════════════════════════════════ */
 
-/* ── Cores da marca ──
-   Tiradas do logo oficial. O dourado do logo (#B87818) é mais
-   escuro do que o dos cartazes; para ecrã usamos uma versão
-   ligeiramente mais clara, que lê melhor sobre fundo escuro
-   sem deixar de ser a mesma cor. */
 export const OURO = "#B87818";        // dourado do logo
 export const OURO_ECRA = "#D89A2A";   // versão para fundo escuro
+export const WA_GREEN = "#25D366";
 
 export const STAND = {
   nome: "JPM",
@@ -30,99 +26,179 @@ export const STAND = {
     ["Compramos", "o seu carro atual"],
   ],
 
+  /* Frase que consta em todos os anúncios deles */
+  revisao: "Todas as viaturas são entregues com revisão geral efetuada.",
+
+  /* Aviso legal que eles usam em todos os anúncios */
+  aviso: "O equipamento descrito carece de confirmação junto da entidade vendedora.",
+
   credito: {
     taeg: 0.069,        // confere com os cartazes: 3.450€ a 60 meses ≈ 70€/mês
     prazoMax: 120,
-    prazoInicial: 60,   // 60 meses = o prazo que usam na publicidade
+    prazoInicial: 60,
     entradaInicial: 0,
   },
 };
 
 /* ══════════════════════════════════════════════════════════
-   VIATURAS EM DESTAQUE
-   Dados retirados dos cartazes do Instagram.
+   VIATURAS
+   Dados dos anúncios do Standvirtual + cartazes do Instagram.
 
-   `destaque`  → a frase que eles põem na barra preta do cartaz
-   `garantia`  → só preenchido quando o cartaz o indica
-   `cv`/`caixa`→ null quando o cartaz não diz (o site não os mostra)
+   `slug`      → endereço da página (ex: /viatura/renault-clio)
+   `imgs`      → lista de fotos; para já cada carro tem uma,
+                 basta juntar mais ao array quando as tiveres
+   `destaque`  → a frase da barra preta do cartaz
    ══════════════════════════════════════════════════════════ */
 
 export const CARROS = [
   {
     id: 1,
+    slug: "renault-clio-09-tce",
     marca: "Renault",
     modelo: "Clio",
-    versao: "0.9 TCe",
-    ano: 2014, mes: "09",
+    versao: "0.9 TCe Look",
+    ano: 2014, mes: "09", mesNome: "setembro de 2014",
     km: 143000,
     combustivel: "Gasolina",
-    cv: null, caixa: null,
+    cv: 90,
+    caixa: "Manual, 5 velocidades",
     preco: 9450,
     destaque: "Nacional",
     garantia: "18 meses",
-    img: "/carros/clio-2014.jpg",
+    inspecao: "setembro de 2027",
+    imgs: ["/carros/clio-2014.jpg"],
+    extras: [
+      "Ar Condicionado",
+      "Direção Assistida",
+      "Rádio Touch",
+      "Volante Regulável em Altura",
+      "Volante e Manete em Pele",
+      "Computador de Bordo",
+      "Fecho Central",
+      "Retrovisores Reguláveis Eletricamente",
+      "4 Vidros Elétricos",
+      "Apoio de Braço",
+    ],
+    notas: [],
     tema: { base: "#15171A", glow: OURO_ECRA, texto: "#F0F1F3" },
   },
   {
     id: 2,
+    slug: "dacia-logan-mcv-09-tce",
     marca: "Dacia",
     modelo: "Logan MCV",
-    versao: "0.9 TCe",
-    ano: 2016, mes: "11",
+    versao: "0.9 TCe Bi-Fuel",
+    ano: 2016, mes: "11", mesNome: "novembro de 2016",
     km: 215000,
     combustivel: "Gasolina / GPL",
-    cv: null, caixa: null,
+    cv: 90,
+    caixa: "Manual, 5 velocidades",
     preco: 5950,
     destaque: "Bi-Fuel",
     garantia: "18 meses",
-    img: "/carros/dacia-logan-2016.jpg",
+    inspecao: null,
+    imgs: ["/carros/dacia-logan-2016.jpg"],
+    extras: [
+      "Ar Condicionado",
+      "Direção Assistida",
+      "Rádio Touch",
+      "Fecho Central com Comando",
+      "Retrovisores com Regulação Elétrica",
+      "Vidros Elétricos",
+      "Faróis de Nevoeiro",
+      "Jantes de Liga-Leve",
+    ],
+    notas: [],
     tema: { base: "#0E1420", glow: OURO_ECRA, texto: "#E9EDF4" },
   },
   {
     id: 3,
+    slug: "toyota-yaris-13-vvti",
     marca: "Toyota",
     modelo: "Yaris",
     versao: "1.3 VVT-i",
-    ano: 2006, mes: "08",
+    ano: 2006, mes: "08", mesNome: "agosto de 2006",
     km: 240000,
     combustivel: "Gasolina",
-    cv: null, caixa: null,
+    cv: 87,
+    caixa: "Manual, 5 velocidades",
     preco: 4950,
     destaque: "IUC 39€",
     garantia: "18 meses",
-    img: "/carros/toyota-yaris-2006.jpg",
+    inspecao: null,
+    imgs: ["/carros/toyota-yaris-2006.jpg"],
+    extras: [
+      "Ar Condicionado",
+      "Direção Assistida",
+      "Rádio",
+      "Volante em Pele",
+      "Fecho Central com Comando",
+      "Retrovisores com Regulação Elétrica",
+      "Vidros Elétricos",
+      "Jantes de Liga-Leve",
+    ],
+    notas: ["IUC anual de 39€"],
     tema: { base: "#101012", glow: OURO_ECRA, texto: "#EFEFF1" },
   },
   {
     id: 4,
+    slug: "chevrolet-aveo-sedan-12-ls",
     marca: "Chevrolet",
     modelo: "Aveo Sedan",
     versao: "1.2 LS",
-    ano: 2011, mes: "01",
+    ano: 2011, mes: "01", mesNome: "janeiro de 2011",
     km: 140000,
     combustivel: "Gasolina",
-    cv: null, caixa: null,
+    cv: 86,
+    caixa: "Manual, 5 velocidades",
     preco: 4750,
     destaque: "Único dono",
     garantia: "18 meses",
-    img: "/carros/chevrolet-aveo-2011.jpg",
+    inspecao: null,
+    imgs: ["/carros/chevrolet-aveo-2011.jpg"],
+    extras: [
+      "Ar Condicionado",
+      "Direção Assistida",
+      "Rádio",
+      "Entrada Aux",
+      "Volante Regulável em Altura",
+      "Fecho Central com Comando",
+      "Retrovisores com Regulação Elétrica",
+      "Vidros Elétricos",
+      "Jantes de Liga-Leve",
+    ],
+    notas: [],
     tema: { base: "#16181B", glow: OURO_ECRA, texto: "#F1F2F4" },
   },
   {
     id: 5,
+    slug: "peugeot-206-11-look",
     marca: "Peugeot",
     modelo: "206",
-    versao: "1.1 Look",
-    ano: 2005, mes: "07",
-    km: 175000,
+    versao: "1.1i Look",
+    ano: 2005, mes: "07", mesNome: "julho de 2005",
+    km: 176000,   // ⚠️ o cartaz diz 175.000, a descrição diz 176.000 — confirmar
     combustivel: "Gasolina",
-    cv: null, caixa: null,
+    cv: 60,
+    caixa: "Manual, 5 velocidades",
     preco: 3450,
     destaque: "Desde 70€/mês",
-    garantia: null,          // o cartaz deste não indica garantia
-    img: "/carros/peugeot-206-2005.jpg",
+    garantia: null,   // o anúncio deste não menciona garantia — confirmar
+    inspecao: "julho de 2027",
+    imgs: ["/carros/peugeot-206-2005.jpg"],
+    extras: [
+      "Direção Assistida",
+      "Rádio",
+      "Volante Regulável em Altura",
+      "Fecho Central",
+      "Vidros Elétricos",
+    ],
+    notas: [
+      "Kit de distribuição substituído aos 171.000 km",
+      "IUC válido até julho de 2027",
+    ],
     tema: { base: "#141618", glow: OURO_ECRA, texto: "#F0F1F2" },
   },
 ];
 
-export const WA_GREEN = "#25D366";
+export const porSlug = (slug) => CARROS.find((c) => c.slug === slug);
