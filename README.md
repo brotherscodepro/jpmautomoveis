@@ -25,7 +25,8 @@ npm run dev
 | Stock completo | jpmautomoveis.standvirtual.com |
 | Atendimento | Por marcação |
 | Serviços | 18 meses de garantia · Financiamento até 120 meses · Entrega em todo o país · Compram viaturas |
-| Cor da marca | Laranja `#C67B16` / `#E09520` (tirada dos cartazes do Instagram) |
+| Logo | Recebido. Versões em `public/brand/` |
+| Cor da marca | Dourado `#B87818` (logo) · `#D89A2A` (versão para ecrã) |
 
 ---
 
@@ -39,8 +40,7 @@ npm run dev
 - [ ] **TAEG do financiamento** — está a 6.9% em `src/dados.js`.
       Perguntar qual usar, ou tirar a percentagem e deixar só "valor indicativo"
 - [ ] **Horário** — sendo por marcação, confirmar se há dias/horas de referência
-- [ ] **Imagem de partilha** — `public/og.jpg`, 1200×630 (é o que aparece
-      quando o link é enviado no WhatsApp)
+- [x] ~~Imagem de partilha `public/og.jpg`~~ — gerada com o logo + Clio
 - [ ] **Domínio** — jpmautomoveis.pt ou similar
 
 ---
@@ -113,3 +113,22 @@ com mensagem de WhatsApp diferente.
 **Morada não está em destaque** — sendo por marcação e com entrega em
 todo o país, a localização não é o argumento principal. Está no rodapé,
 com link para o Google Maps, e nos dados estruturados para o Google.
+
+
+---
+
+## Ficheiros de marca
+
+Em `public/brand/`:
+
+| Ficheiro | Uso |
+|---|---|
+| `logo-escuro.png` | Logo para fundos escuros (usado no site) |
+| `logo-claro.png` | Logo original, fundo transparente, para fundos claros |
+| `icon-512.png` | Favicon |
+| `icon-180.png` | Ícone iOS (quando guardam o site no telemóvel) |
+| `../og.jpg` | Imagem de partilha no WhatsApp / Facebook |
+
+Todos gerados a partir do logo original com o fundo branco removido.
+O `logo-escuro` tem os traços do carro invertidos para branco — o dourado
+mantém-se igual.
