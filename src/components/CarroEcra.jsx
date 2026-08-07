@@ -27,7 +27,7 @@ export default function CarroEcra({ car, activo, scrollP, onFicha }) {
         transform: activo ? `translateY(${scrollP * -60}px) scale(1.04)` : "scale(1.12)",
         transition: activo ? "transform .1s linear" : "transform 1s ease",
       }}>
-        <img src={car.img} alt={`${car.marca} ${car.modelo}`}
+        <img src={car.imgs[0]} alt={`${car.marca} ${car.modelo}`}
           loading={activo ? "eager" : "lazy"}
           style={{
             width: "100%", height: "100%", objectFit: "cover",
