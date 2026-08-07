@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback, useRef } from "react";
 import { STAND, WA_GREEN } from "../dados";
 import { fmt, msgMarcacao, prestacao, WaIcon, PhoneIcon } from "../lib.jsx";
 
@@ -10,6 +10,18 @@ export default function Viatura({ car, voltar }) {
   const [imgIdx, setImgIdx] = useState(0);
   const [zoom, setZoom] = useState(false);
 
+  const total = car.imgs.length;
+  const varias = total > 1;
+
+  const seguinte = useCallback(
+    () => setImgIdx((i) => (i + 1) % total),
+    [total]
+  );
+  const anterior = useCallback(
+    () => setImgIdx((i) => (i - 1 + total) % total),
+    [total]
+  );
+
   const mensal = prestacao(car.preco, ent, mes);
   const financiado = car.preco * (1 - ent / 100);
 
@@ -17,11 +29,81 @@ export default function Viatura({ car, voltar }) {
     document.title = `${car.marca} ${car.modelo} ${car.versao} — JPM Automóveis`;
   }, [car]);
 
+  // teclado: setas navegam, Escape fecha o ecrã inteiro
   useEffect(() => {
-    const h = (e) => e.key === "Escape" && setZoom(false);
+    const h = (e) => {
+      if (e.key === "Escape") setZoom(false);
+      if (!varias) return;
+      if (e.key === "ArrowRight") seguinte();
+      if (e.key === "ArrowLeft") anterior();
+    };
     window.addEventListener("keydown", h);
     return () => window.removeEventListener("keydown", h);
-  }, []);
+  }, [varias, seguinte, anterior]);
+
+  // bloquear scroll do fundo quando o ecrã inteiro está aberto
+  useEffect(() => {
+    if (!zoom) return;
+    document.body.style.overflow = "hidden";
+    return () => { document.body.style.overflow = ""; };
+  }, [zoom]);
+
+  // arrastar com o dedo
+  const toque = useRef(null);
+  const aoTocar = (e) => { toque.current = e.touches[0].clientX; };
+  const aoLargar = (e) => {
+    if (toque.current === null || !varias) return;
+    const delta = e.changedTouches[0].clientX - toque.current;
+    if (Math.abs(delta) > 45) delta < 0 ? seguinte() : anterior();
+    toque.current = null;
+  };
+
+  /* Seta reutilizável — usada na foto e no ecrã inteiro */
+  const Seta = ({ lado, onClick, grande }) => (
+    <button
+      onClick={(e) => { e.stopPropagation(); onClick(); }}
+      aria-label={lado === "esq" ? "Foto anterior" : "Foto seguinte"}
+      style={{
+        position: "absolute", top: "50%", transform: "translateY(-50%)",
+        [lado === "esq" ? "left" : "right"]: grande ? 16 : 12,
+        width: grande ? 52 : 42, height: grande ? 52 : 42,
+        borderRadius: "50%",
+        background: "rgba(0,0,0,.45)",
+        backdropFilter: "blur(6px)",
+        border: "1px solid rgba(255,255,255,.18)",
+        color: "#fff", display: "flex",
+        alignItems: "center", justifyContent: "center",
+        zIndex: 5, transition: "background .2s, transform .2s",
+      }}
+      onMouseEnter={(e) => {
+        e.currentTarget.style.background = "rgba(0,0,0,.7)";
+        e.currentTarget.style.transform = "translateY(-50%) scale(1.06)";
+      }}
+      onMouseLeave={(e) => {
+        e.currentTarget.style.background = "rgba(0,0,0,.45)";
+        e.currentTarget.style.transform = "translateY(-50%)";
+      }}
+    >
+      <svg width={grande ? 24 : 20} height={grande ? 24 : 20}
+        viewBox="0 0 24 24" fill="none" stroke="currentColor"
+        strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
+        <path d={lado === "esq" ? "M15 18l-6-6 6-6" : "M9 18l6-6-6-6"} />
+      </svg>
+    </button>
+  );
+
+  /* Contador "2 / 5" */
+  const Contador = ({ estilo }) => (
+    <div style={{
+      position: "absolute", bottom: 14, right: 14,
+      background: "rgba(0,0,0,.55)", backdropFilter: "blur(6px)",
+      color: "#fff", padding: "5px 12px", borderRadius: 99,
+      fontSize: 12, fontWeight: 600, fontVariantNumeric: "tabular-nums",
+      zIndex: 5, ...estilo,
+    }}>
+      {imgIdx + 1} / {total}
+    </div>
+  );
 
   const Bloco = ({ titulo, children, style }) => (
     <section style={{ marginBottom: 34, ...style }}>
@@ -40,16 +122,53 @@ export default function Viatura({ car, voltar }) {
       minHeight: "100vh", background: t.base, color: t.texto,
       overflowY: "auto",
     }}>
-      {/* lightbox */}
+      {/* ecrã inteiro */}
       {zoom && (
         <div onClick={() => setZoom(false)} style={{
           position: "fixed", inset: 0, zIndex: 900,
           background: "rgba(0,0,0,.94)", display: "flex",
           alignItems: "center", justifyContent: "center", padding: 20,
         }}>
-          <img src={car.imgs[imgIdx]} alt="" style={{
-            maxWidth: "100%", maxHeight: "100%", objectFit: "contain", borderRadius: 8,
-          }} />
+          {/* fechar */}
+          <button
+            onClick={(e) => { e.stopPropagation(); setZoom(false); }}
+            aria-label="Fechar"
+            style={{
+              position: "absolute", top: 16, right: 16, zIndex: 6,
+              width: 44, height: 44, borderRadius: "50%",
+              background: "rgba(255,255,255,.12)", color: "#fff",
+              display: "flex", alignItems: "center", justifyContent: "center",
+            }}>
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none"
+              stroke="currentColor" strokeWidth="2.2" strokeLinecap="round">
+              <path d="M18 6L6 18M6 6l12 12" />
+            </svg>
+          </button>
+
+          {varias && <Seta lado="esq" onClick={anterior} grande />}
+          {varias && <Seta lado="dir" onClick={seguinte} grande />}
+
+          <img
+            src={car.imgs[imgIdx]}
+            alt={`${car.marca} ${car.modelo} — foto ${imgIdx + 1}`}
+            onClick={(e) => e.stopPropagation()}
+            onTouchStart={aoTocar}
+            onTouchEnd={aoLargar}
+            style={{
+              maxWidth: "100%", maxHeight: "100%",
+              objectFit: "contain", borderRadius: 8,
+            }}
+          />
+
+          {varias && (
+            <div style={{
+              position: "absolute", bottom: 22, left: "50%",
+              transform: "translateX(-50%)", color: "rgba(255,255,255,.75)",
+              fontSize: 13, fontWeight: 600, fontVariantNumeric: "tabular-nums",
+            }}>
+              {imgIdx + 1} / {total}
+            </div>
+          )}
         </div>
       )}
 
@@ -79,7 +198,11 @@ export default function Viatura({ car, voltar }) {
       </header>
 
       {/* ─── foto ─── */}
-      <div style={{ position: "relative", background: "#000" }}>
+      <div
+        style={{ position: "relative", background: "#000" }}
+        onTouchStart={aoTocar}
+        onTouchEnd={aoLargar}
+      >
         <img
           src={car.imgs[imgIdx]}
           alt={`${car.marca} ${car.modelo}`}
@@ -96,26 +219,34 @@ export default function Viatura({ car, voltar }) {
             padding: "5px 13px", borderRadius: 3,
             fontSize: 10.5, fontWeight: 800,
             letterSpacing: ".12em", textTransform: "uppercase",
+            zIndex: 4,
           }}>{car.destaque}</span>
         )}
-        {car.imgs.length > 1 && (
+
+        {varias && <Seta lado="esq" onClick={anterior} />}
+        {varias && <Seta lado="dir" onClick={seguinte} />}
+        {varias && <Contador />}
+
+        {varias && (
           <div style={{
             position: "absolute", bottom: 14, left: "50%",
-            transform: "translateX(-50%)", display: "flex", gap: 7,
+            transform: "translateX(-50%)", display: "flex", gap: 7, zIndex: 5,
           }}>
             {car.imgs.map((_, i) => (
-              <button key={i} onClick={() => setImgIdx(i)} style={{
-                width: i === imgIdx ? 26 : 9, height: 9, borderRadius: 99,
-                background: i === imgIdx ? t.glow : "rgba(255,255,255,.45)",
-                transition: "all .3s",
-              }} />
+              <button key={i} onClick={() => setImgIdx(i)}
+                aria-label={`Foto ${i + 1}`}
+                style={{
+                  width: i === imgIdx ? 26 : 9, height: 9, borderRadius: 99,
+                  background: i === imgIdx ? t.glow : "rgba(255,255,255,.45)",
+                  transition: "all .3s",
+                }} />
             ))}
           </div>
         )}
       </div>
 
       {/* miniaturas */}
-      {car.imgs.length > 1 && (
+      {varias && (
         <div style={{
           display: "flex", gap: 8, overflowX: "auto",
           padding: "12px clamp(16px,4vw,40px)",
