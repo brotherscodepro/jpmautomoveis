@@ -1,3 +1,5 @@
+import { fotosDe } from "./fotos";
+
 /* ══════════════════════════════════════════════════════════
    JPM AUTOMÓVEIS
    ══════════════════════════════════════════════════════════ */
@@ -45,8 +47,9 @@ export const STAND = {
    Dados dos anúncios do Standvirtual + cartazes do Instagram.
 
    `slug`      → endereço da página (ex: /viatura/renault-clio)
-   `imgs`      → lista de fotos; para já cada carro tem uma,
-                 basta juntar mais ao array quando as tiveres
+   `pasta`     → nome da pasta em src/fotos/ onde estão as fotos
+                 deste carro. Largar lá os ficheiros e o site
+                 apanha-os sozinho (ordenados pelo nome).
    `destaque`  → a frase da barra preta do cartaz
    ══════════════════════════════════════════════════════════ */
 
@@ -54,6 +57,7 @@ export const CARROS = [
   {
     id: 1,
     slug: "renault-clio-09-tce",
+    pasta: "clio",   // src/fotos/clio/
     marca: "Renault",
     modelo: "Clio",
     versao: "0.9 TCe Look",
@@ -66,7 +70,6 @@ export const CARROS = [
     destaque: "Nacional",
     garantia: "18 meses",
     inspecao: "setembro de 2027",
-    imgs: ["/carros/clio-2014.jpg"],
     extras: [
       "Ar Condicionado",
       "Direção Assistida",
@@ -85,6 +88,7 @@ export const CARROS = [
   {
     id: 2,
     slug: "dacia-logan-mcv-09-tce",
+    pasta: "logan",   // src/fotos/logan/
     marca: "Dacia",
     modelo: "Logan MCV",
     versao: "0.9 TCe Bi-Fuel",
@@ -97,7 +101,6 @@ export const CARROS = [
     destaque: "Bi-Fuel",
     garantia: "18 meses",
     inspecao: null,
-    imgs: ["/carros/dacia-logan-2016.jpg"],
     extras: [
       "Ar Condicionado",
       "Direção Assistida",
@@ -114,6 +117,7 @@ export const CARROS = [
   {
     id: 3,
     slug: "toyota-yaris-13-vvti",
+    pasta: "yaris",   // src/fotos/yaris/
     marca: "Toyota",
     modelo: "Yaris",
     versao: "1.3 VVT-i",
@@ -126,7 +130,6 @@ export const CARROS = [
     destaque: "IUC 39€",
     garantia: "18 meses",
     inspecao: null,
-    imgs: ["/carros/toyota-yaris-2006.jpg"],
     extras: [
       "Ar Condicionado",
       "Direção Assistida",
@@ -143,6 +146,7 @@ export const CARROS = [
   {
     id: 4,
     slug: "chevrolet-aveo-sedan-12-ls",
+    pasta: "aveo",   // src/fotos/aveo/
     marca: "Chevrolet",
     modelo: "Aveo Sedan",
     versao: "1.2 LS",
@@ -155,7 +159,6 @@ export const CARROS = [
     destaque: "Único dono",
     garantia: "18 meses",
     inspecao: null,
-    imgs: ["/carros/chevrolet-aveo-2011.jpg"],
     extras: [
       "Ar Condicionado",
       "Direção Assistida",
@@ -173,6 +176,7 @@ export const CARROS = [
   {
     id: 5,
     slug: "peugeot-206-11-look",
+    pasta: "206",   // src/fotos/206/
     marca: "Peugeot",
     modelo: "206",
     versao: "1.1i Look",
@@ -185,7 +189,6 @@ export const CARROS = [
     destaque: "Desde 70€/mês",
     garantia: null,   // o anúncio deste não menciona garantia — confirmar
     inspecao: "julho de 2027",
-    imgs: ["/carros/peugeot-206-2005.jpg"],
     extras: [
       "Direção Assistida",
       "Rádio",
@@ -200,5 +203,21 @@ export const CARROS = [
     tema: { base: "#141618", glow: OURO_ECRA, texto: "#F0F1F2" },
   },
 ];
+
+/* Junta as fotos de cada pasta ao respetivo carro.
+   Se uma pasta estiver vazia, o carro fica sem fotos em vez de
+   rebentar — e em desenvolvimento aparece um aviso na consola. */
+for (const c of CARROS) {
+  c.imgs = fotosDe(c.pasta);
+  if (c.imgs.length === 0 && import.meta.env?.DEV) {
+    console.warn(
+      `[JPM] Sem fotos para ${c.marca} ${c.modelo}. ` +
+      `Larga as imagens em src/fotos/${c.pasta}/`
+    );
+  }
+}
+
+/** Só mostra no site as viaturas que já têm pelo menos uma foto. */
+export const CARROS_VISIVEIS = CARROS.filter((c) => c.imgs.length > 0);
 
 export const porSlug = (slug) => CARROS.find((c) => c.slug === slug);
